@@ -1,0 +1,283 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Calculator Project',
+      theme: ThemeData(primarySwatch: Colors.indigo),
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String equation = '';
+  String result = '';
+
+  void buttonPressed(String buttonText) {
+    setState(() {
+      if (buttonText == 'AC') {
+        equation = '';
+        result = '';
+      } else if (buttonText == '=') {
+        try {
+          result = evalExpression();
+        } catch (e) {
+          result = 'Error';
+        }
+      } else {
+        equation += buttonText;
+      }
+    });
+  }
+
+  String evalExpression() {
+    String expression = equation;
+
+    expression = expression.replaceAll('÷', '/');
+    expression = expression.replaceAll('x', '*');
+
+    return evalExpressionWithExceptionHandling(expression);
+  }
+
+  String evalExpressionWithExceptionHandling(String expression) {
+    try {
+      // Use a math library or parser of your choice to evaluate the expression
+      // Here, we're using the built-in eval function from the 'math_expressions' package
+      // Make sure to add the 'math_expressions' package to your pubspec.yaml file
+      // import 'package:math_expressions/math_expressions.dart';
+      // Parser p = Parser();
+      // Expression exp = p.parse(expression);
+      // ContextModel cm = ContextModel();
+      // return exp.evaluate(EvaluationType.REAL, cm).toString();
+
+      // For simplicity, let's use the 'eval' function from 'dart:math'
+      // Note: eval does not handle all edge cases and may not be secure for arbitrary expressions
+      return eval(expression).toString();
+    } catch (e) {
+      return 'Error';
+    }
+  }
+
+  double eval(String expression) {
+    return Function.apply(
+      // ignore: prefer-trailing-comma
+      Function.apply(
+        expression.contains(new RegExp(r'\(\s*\)'))
+            ? eval
+            : evalFunction(expression),
+        [evalArguments(expression)]
+            .map(eval)
+            .toList(growable: false)
+            .cast<dynamic>(),
+      ),
+      [0].cast<dynamic>(),
+    );
+  }
+
+  String evalFunction(String expression) {
+    return expression.substring(
+      0,
+      expression.indexOf("("),
+    );
+  }
+
+  String evalArguments(String expression) {
+    return expression.substring(
+      expression.indexOf("(") + 1,
+      expression.lastIndexOf(")"),
+    );
+  }
+
+  Widget buildButton(String buttonText) {
+    return Container(
+      width: 70,
+      height: 50,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: buttonText == '=' ? Colors.orange : Colors.brown.shade400,
+        ),
+        onPressed: () {
+          buttonPressed(buttonText);
+        },
+        child: Text(
+          buttonText,
+          style: const TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Calculator App",
+          style: TextStyle(
+            backgroundColor: Colors.blueGrey,
+            fontSize: 
+
+
+
+
+
+
+
+
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Calculator Project',
+      theme: ThemeData(primarySwatch: Colors.indigo),
+      home: const HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String equation = '';
+  String result = '';
+
+  void buttonPressed(String buttonText) {
+    setState(() {
+      if (buttonText == 'AC') {
+        equation = '';
+        result = '';
+      } else if (buttonText == '=') {
+        try {
+          result = evalExpression();
+        } catch (e) {
+          result = 'Error';
+        }
+      } else {
+        equation += buttonText;
+      }
+    });
+  }
+
+  String evalExpression() {
+    String expression = equation;
+
+    expression = expression.replaceAll('÷', '/');
+    expression = expression.replaceAll('x', '*');
+
+    return evalExpressionWithExceptionHandling(expression);
+  }
+
+  String evalExpressionWithExceptionHandling(String expression) {
+    try {
+      // Use a math library or parser of your choice to evaluate the expression
+      // Here, we're using the built-in eval function from the 'math_expressions' package
+      // Make sure to add the 'math_expressions' package to your pubspec.yaml file
+      // import 'package:math_expressions/math_expressions.dart';
+      // Parser p = Parser();
+      // Expression exp = p.parse(expression);
+      // ContextModel cm = ContextModel();
+      // return exp.evaluate(EvaluationType.REAL, cm).toString();
+
+      // For simplicity, let's use the 'eval' function from 'dart:math'
+      // Note: eval does not handle all edge cases and may not be secure for arbitrary expressions
+      return eval(expression).toString();
+    } catch (e) {
+      return 'Error';
+    }
+  }
+
+  double eval(String expression) {
+    return Function.apply(
+      // ignore: prefer-trailing-comma
+      Function.apply(
+        expression.contains(new RegExp(r'\(\s*\)'))
+            ? eval
+            : evalFunction(expression),
+        [evalArguments(expression)]
+            .map(eval)
+            .toList(growable: false)
+            .cast<dynamic>(),
+      ),
+      [0].cast<dynamic>(),
+    );
+  }
+
+  String evalFunction(String expression) {
+    return expression.substring(
+      0,
+      expression.indexOf("("),
+    );
+  }
+
+  String evalArguments(String expression) {
+    return expression.substring(
+      expression.indexOf("(") + 1,
+      expression.lastIndexOf(")"),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "Calculator App",
+          style: TextStyle(
+            backgroundColor: Colors.blueGrey,
+            fontSize: 50,
+            color: Colors.red,
+            decoration: TextDecoration.underline,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildButton("AC"),
+              buildButton("+/-"),
+              buildButton("%"),
+              buildButton("÷"),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
